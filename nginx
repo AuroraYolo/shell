@@ -1,0 +1,95 @@
+#! /bin/bash
+
+# chkconfig:2345 99 20
+
+#description:nginx-server
+
+nginx=/usr/local/nginx/sbin/nginx
+
+case $1 in
+
+ 
+
+    start)
+
+        netstat -anlpt | grep nginx
+
+        if [ $? -eq 0 ]
+
+            then
+
+                echo "nginx-server isalready running"
+
+            else
+
+                echo "nginx-server beginstart"
+
+                   $nginx
+
+         fi
+
+    ;;
+
+    stop)
+
+        $nginx -s stop
+
+        if [ $? -eq 0 ]
+
+            then
+
+                echo "nginx-server isstoped"
+
+            else
+
+                echo "nginx-server stopfail,try again"
+
+        fi
+
+        ;;
+
+    status)
+
+        netstat -anlpt | grep nginx
+
+        if [ $? -eq 0 ]
+
+            then
+
+                echo "nginx-server isrunning"
+
+            else
+
+                echo "nginx-server isstoped"
+
+            fi
+
+        ;;
+
+    restart)
+
+        $nginx -s reload &>/dev/null
+
+        if [ $? -eq 0 ]
+
+            then
+
+                echo "nginx-server isbegin restart"
+
+            else
+
+                echo "nginx-server restartfail"
+
+        fi
+
+        ;;
+
+    *)
+
+                echo "please enter {startrestart status stop}"
+
+        ;;
+
+esac
+
+exit 0 
